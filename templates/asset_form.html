@@ -1,0 +1,75 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+            <h3>Add Asset</h3>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="mb-3">
+                    <label class="form-label">Asset ID</label>
+                    <input type="text" class="form-control" name="asset_id" value="{{ asset[0] if asset else '' }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Asset Name</label>
+                    <input type="text" class="form-control" name="asset_name" value="{{ asset[1] if asset else '' }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Category</label>
+                    <input type="text" class="form-control" name="category" value="{{ asset[2] if asset else '' }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Brand</label>
+                    <input type="text" class="form-control" name="brand" value="{{ asset[3] if asset else '' }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Model</label>
+                    <input type="text" class="form-control" name="model" value="{{ asset[4] if asset else '' }}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select class="form-select" name="status" required>
+                        <option value="Available">Working</option>
+                        <option value="Assigned">Repair</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Employee ID</label>
+                    <input type="text" class="form-control" name="employee_id" value="{{ asset[6] if asset else '' }}">
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    {% if edit %}
+                    Update Asset
+                    {% else %}
+                    Save Asset
+                    {% endif %}
+                </button>
+
+                <a href="/assets" class="btn btn-secondary">
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

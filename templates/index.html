@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>IT Asset Management System</title>
+
+    <!-- Bootstrap -->
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Google Font -->
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Custom CSS -->
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+<!-- ===========================
+        SIDEBAR
+============================ -->
+
+<div class="sidebar" id="sidebar">
+    <!-- Logo -->
+    <div class="logo">
+        <i class="bi bi-pc-display-horizontal"></i>
+        <span>IT Asset</span>
+    </div>
+    <!-- Navigation -->
+    <ul class="nav-links">
+        <li>
+            <a href="/">
+                <i class="bi bi-speedometer2"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+        <li>
+            <a href="/employees">
+                <i class="bi bi-people-fill"></i>
+                <span>Employees</span>
+            </a>
+        </li>
+        <li>
+            <a href="/assets">
+                <i class="bi bi-laptop"></i>
+                <span>Assets</span>
+            </a>
+        </li>
+        <li>
+            <a href="/complaints">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <span>Complaints</span>
+            </a>
+        </li>
+        <li>
+            <a href="/maintenance">
+                <i class="bi bi-tools"></i>
+                <span>Maintenance</span>
+            </a>
+        </li>
+        <li>
+            <a href="/reports">
+                <i class="bi bi-file-earmark-bar-graph"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i class="bi bi-gear-fill"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+        <li>
+            <a href="/logout">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+    </ul>
+</div>
+
+<!-- ===========================
+        MAIN CONTENT
+============================ -->
+
+<div class="main">
+
+<!-- ===========================
+        NAVBAR
+============================ -->
+
+<nav class="top-navbar">
+
+    <div class="left-navbar">
+
+        <!-- Sidebar Toggle -->
+
+        <button class="menu-btn" id="menu-btn">
+
+            <i class="bi bi-list"></i>
+
+        </button>
+
+        <h4>
+
+            IT Asset Management System
+
+        </h4>
+
+    </div>
+
+    <div class="right-navbar">
+
+        <!-- Search -->
+
+        <div class="search-box">
+
+            <i class="bi bi-search"></i>
+
+            <input
+                type="text"
+                placeholder="Search...">
+
+        </div>
+        <!-- Live Clock -->
+
+        <div class="clock">
+
+            <i class="bi bi-clock-history"></i>
+
+            <span id="clock"></span>
+
+        </div>
+
+        <!-- Dark Mode -->
+
+        <button
+            class="icon-btn" id="themeToggle">
+            <i class="bi bi-moon-fill"></i>
+        </button>
+
+        <!-- User Profile -->
+
+        <div class="dropdown">
+
+            <button
+                class="profile-btn dropdown-toggle"
+                data-bs-toggle="dropdown">
+
+                <i class="bi bi-person-circle"></i>
+
+                {{ session['user'] }}
+
+            </button>
+
+            <ul class="dropdown-menu dropdown-menu-end shadow">
+
+                <li>
+
+                    <h6 class="dropdown-header">
+
+                        Logged In As
+
+                    </h6>
+
+                </li>
+
+                <li>
+
+                    <span class="dropdown-item-text">
+
+                        {{ session['user'] }}
+
+                    </span>
+
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>
+
+                    <a class="dropdown-item"
+                       href="/">
+
+                        <i class="bi bi-speedometer2"></i>
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a class="dropdown-item"
+                       href="#">
+
+                        <i class="bi bi-person"></i>
+
+                        My Profile
+
+                    </a>
+
+                </li>
+
+                <li>
+
+                    <a class="dropdown-item"
+                       href="#">
+
+                        <i class="bi bi-gear"></i>
+
+                        Settings
+
+                    </a>
+
+                </li>
+
+                <li><hr class="dropdown-divider"></li>
+
+                <li>
+
+                    <a class="dropdown-item text-danger"
+                       href="/logout">
+
+                        <i class="bi bi-box-arrow-right"></i>
+
+                        Logout
+
+                    </a>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</nav>
+
+<!-- ===============================
+            PAGE CONTENT
+================================ -->
+
+<div class="page-content">
+
+    {% block content %}
+
+    {% endblock %}
+
+</div>
+
+<!-- ===============================
+            FOOTER
+================================ -->
+
+<footer class="footer">
+
+    <div>
+
+        © 2026
+
+        <b>IT Asset Management System</b>
+
+    </div>
+
+    <div>
+
+        Developed By
+
+        <b>Harsh Yadav</b>
+
+    </div>
+
+</footer>
+
+</div>
+
+<!-- Bootstrap -->
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Custom JS -->
+
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+
+{% block scripts %}
+
+{% endblock %}
+
+
+</body>
+
+</html>

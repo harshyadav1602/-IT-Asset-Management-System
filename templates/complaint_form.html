@@ -1,0 +1,73 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+<div class="card shadow">
+
+<div class="card-header bg-primary text-white">
+<h3>Add Complaint</h3>
+</div>
+
+<div class="card-body">
+
+<form method="POST">
+
+<div class="mb-3">
+<label>Complaint ID</label>
+<input type="text" name="complaint_id" class="form-control" value="{{ complaint[0] if complaint else '' }}"
+       {% if edit %}readonly{% endif %} required>
+</div>
+
+<div class="mb-3">
+<label>Employee ID</label>
+<input type="text" name="employee_id" class="form-control" value="{{ complaint[1] if complaint else '' }}" required>
+</div>
+
+<div class="mb-3">
+<label>Asset ID</label>
+<input type="text" name="asset_id" class="form-control" value="{{ complaint[2] if complaint else '' }}" required>
+</div>
+
+<div class="mb-3">
+<label>Issue</label>
+<input type="text" name="issue" class="form-control" value="{{ complaint[3] if complaint else '' }}" required>
+</div>
+
+<div class="mb-3">
+<label>Complaint Date</label>
+<input type="date" name="complaint_date" class="form-control" value="{{ complaint[4] if complaint else '' }}" required>
+</div>
+
+<div class="mb-3">
+<label>Status</label>
+
+<select name="status" class="form-select">
+
+<option>Select</option>
+<option>Pending</option>
+<option>In Progress</option>
+<option>Resolved</option>
+
+</select>
+
+</div>
+
+<button class="btn btn-success">
+Save Complaint
+</button>
+
+<a href="/complaints" class="btn btn-secondary">
+Cancel
+</a>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,22 @@
+# Virtual Environment
+venv/
+
+# Environment Variables
+.env
+
+# Python cache
+__pycache__/
+*.pyc
+
+# VS Code
+.vscode/
+
+# JetBrains IDEs
+.idea/
+
+# Log files
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,131 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container-fluid px-4 mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Complaint Management</h2>
+
+        <div>
+            <a href="/complaints/add" class="btn btn-primary">
+                + Add Complaint
+            </a>
+            <a href="/complaints/export/excel"
+                class="btn btn-success">
+                Export Excel
+            </a>
+
+            <a href="/complaints/export/pdf"
+                class="btn btn-danger">
+                Export PDF
+            </a>
+
+            <a href="/" class="btn btn-secondary">
+                Dashboard
+            </a>
+        </div>
+    </div>
+<form method="GET" action="/complaints" class="mb-3">
+
+    <div class="input-group">
+
+        <input
+        type="text"
+        name="search"
+        class="form-control"
+        placeholder="Search Complaint...">
+
+            <button class="btn btn-primary">
+                Search
+            </button>
+
+            <a href="/complaints" class="btn btn-secondary">
+                Reset
+            </a>
+
+</div>
+
+</form>
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+            <table class="table table-bordered table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Complaint ID</th>
+                        <th>Employee ID</th>
+                        <th>Asset ID</th>
+                        <th>Issue</th>
+                        <th>Complaint Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                {% for complaint in complaints %}
+
+                <tr>
+
+                    <td>{{ complaint[0] }}</td>
+                    <td>{{ complaint[1] }}</td>
+                    <td>{{ complaint[2] }}</td>
+                    <td>{{ complaint[3] }}</td>
+                    <td>{{ complaint[4] }}</td>
+
+                   <td class="text-center">
+                        {% if complaint[5] == "Resolved" %}
+                        <span class="badge status-resolved">
+                            {{ complaint[5] }}
+                        </span>
+                        {% elif complaint[5] == "Pending" %}
+                        <span class="badge status-pending">
+                            {{ complaint[5] }}
+                        </span>
+                        {% elif complaint[5] == "In Progress" %}
+                        <span class="badge status-progress">
+                            {{ complaint[5] }}
+                        </span>
+                        {% else %}
+                        <span class="badge bg-secondary">
+                            {{ complaint[5] }}
+                        </span>
+                        {% endif %}
+                    </td>
+
+                    <td class="text-center">
+                        <div class="action-buttons">
+
+                            <a href="/complaints/edit/{{ complaint[0] }}"
+                            class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+
+                            <a href="/complaints/delete/{{ complaint[0] }}"
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('Are you sure you want to delete this complaint?')">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+
+                        </div>
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+                </tbody>
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

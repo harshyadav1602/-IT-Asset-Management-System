@@ -1,0 +1,171 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+
+<div class="card shadow-lg border-0 mb-4 welcome-card">
+    <div class="card-body">
+        <h2 class="fw-bold">
+            Welcome,
+            {{ session['user'] }}
+            👋
+        </h2>
+        <p class="text-muted">
+            Manage Employees, Assets, Complaints and Maintenance from one dashboard.
+        </p>
+    </div>
+</div>
+
+
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row">
+
+    <div class="col-md-3">
+        <div class="card bg-primary text-white shadow">
+
+<div class="card-body text-center">
+
+<i class="bi bi-people-fill display-3"></i>
+
+<h5 class="mt-3">
+Employees
+</h5>
+
+<h2 class="counter">{{ total_employee }}</h2>
+
+</div>
+
+</div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-success text-white shadow">
+            <div class="card-body text-center">
+                <i class="bi bi-laptop display-3"></i>
+                    <h5 class="mt-3">
+                        Assets
+                    </h5>
+                    <h2 class="counter">{{ total_asset }}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-warning text-dark shadow">
+            <div class="card-body text-center">
+                <i class="bi bi-exclamation-circle-fill display-3"></i>
+                    <h5 class="mt-3">
+                        Complaints
+                    </h5>
+                    <h2 class="counter">
+                        {{ total_complaint }}
+                    </h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card bg-danger text-white shadow">
+            <div class="card-body text-center">
+                <i class="bi bi-tools display-3"></i>
+                    <h5 class="mt-3">
+                        Maintenance
+                    </h5>
+                    <h2 class="counter">
+                        {{ total_maintenance }}
+                    </h2>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Bar Chart -->
+<div class="card shadow mt-4">
+    <div class="card-header bg-dark text-white">
+        System Statistics
+    </div>
+
+    <div class="card-body">
+        <canvas id="dashboardChart"
+            data-asset-labels='{{ asset_chart | map(attribute=0) | list | tojson }}'
+            data-asset-values='{{ asset_chart | map(attribute=1) | list | tojson }}'></canvas>
+    </div>
+</div>
+
+<!-- Pie Chart -->
+<div class="card shadow mt-4">
+    <div class="card-header bg-primary text-white">
+        Overall Distribution
+    </div>
+
+    <div class="card-body">
+        <canvas id="pieChart"
+            data-complaint-labels='{{ complaint_chart | map(attribute=0) | list | tojson }}'
+            data-complaint-values='{{ complaint_chart | map(attribute=1) | list | tojson }}'></canvas>
+    </div>
+</div>
+
+<!-- Line Chart -->
+
+<div class="card shadow mt-4">
+    <div class="card-header bg-success text-white">
+        Monthly Maintenance
+    </div>
+    <div class="card-body">
+        <canvas id="lineChart"
+            data-month-labels='{{ maintenance_chart | map(attribute=0) | list | tojson }}'
+            data-month-values='{{ maintenance_chart | map(attribute=1) | list | tojson }}'></canvas>
+    </div>
+</div>
+
+
+<div class="row mt-4">
+<div class="col-md-6">
+<div class="card shadow">
+<div class="card-header bg-primary text-white">
+Asset Status
+</div>
+<div class="card-body">
+<h4>
+✔️ Active Assets :
+{{ total_asset }}
+</h4>
+<hr>
+<h4>
+👨 Employees :
+{{ total_employee }}
+</h4>
+</div>
+</div>
+</div>
+
+
+<div class="col-md-6">
+<div class="card shadow">
+<div class="card-header bg-danger text-white">
+Complaint Summary
+</div>
+<div class="card-body">
+<h4>
+📢 Total Complaints :
+{{ total_complaint }}
+</h4>
+<hr>
+<h4>
+🛠 Maintenance :
+{{ total_maintenance }}
+</h4>
+</div>
+</div>
+</div>
+</div>
+
+
+{% endblock %}
+{% block scripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container-fluid px-4 mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2>Maintenance Management</h2>
+
+        <div>
+            <a href="/maintenance/add" class="btn btn-primary">
+                + Add Maintenance
+            </a>
+            <a href="/maintenance/export/excel"
+                class="btn btn-success">
+                     Export Excel
+            </a>
+            <a href="/maintenance/export/pdf"
+                class="btn btn-danger">
+                    Export PDF
+            </a>
+            <a href="/" class="btn btn-secondary">
+                Dashboard
+            </a>
+        </div>
+    </div>
+
+<form method="GET" action="/maintenance" class="mb-3">
+
+    <div class="input-group">
+
+        <input
+            type="text"
+            name="search"
+            class="form-control"
+            placeholder="Search Maintenance...">
+
+            <button class="btn btn-primary">
+                Search
+            </button>
+
+             <a href="/maintenance" class="btn btn-secondary">
+                Reset
+             </a>
+
+    </div>
+
+</form>
+
+    <div class="card shadow">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-bordered table-hover table-striped align-middle">
+
+                <thead class="table-dark">
+
+                    <tr>
+                        <th>Maintenance ID</th>
+                        <th>Asset ID</th>
+                        <th>Engineer</th>
+                        <th>Date</th>
+                        <th>Cost (₹)</th>
+                        <th>Remarks</th>
+                        <th>Action</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for m in maintenance %}
+
+                <tr>
+
+                    <td>{{ m[0] }}</td>
+                    <td>{{ m[1] }}</td>
+                    <td>{{ m[2] }}</td>
+                    <td>{{ m[3] }}</td>
+                    <td>{{ m[4] }}</td>
+                    <td>{{ m[5] }}</td>
+
+                    <td>
+                        <div class="action-buttons">
+                            <a href="/maintenance/edit/{{ m[0] }}"
+                            class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i> Edit
+                            </a>
+
+                            <a href="/maintenance/delete/{{ m[0] }}"
+                            class="btn btn-danger btn-sm"
+                            onclick="return confirm('Delete this maintenance record?')">
+                                <i class="bi bi-trash"></i> Delete
+                            </a>
+                        </div>
+                    </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

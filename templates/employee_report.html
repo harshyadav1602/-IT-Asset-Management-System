@@ -1,0 +1,105 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="card shadow mb-4">
+        <div class="card-body text-center">
+            <h2 class="fw-bold">
+                IT Asset Management System
+            </h2>
+            <h4>
+                Employee Report
+            </h4>
+            <p class="text-muted">
+                Generated Report
+            </p>
+        </div>
+    </div>
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="alert alert-primary">
+                        <h5>Total Employees</h5>
+                        <h2>{{ total_employee }}</h2>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <input
+                        type="text"
+                        id="searchEmployee"
+                        class="form-control"
+                        placeholder="Search Employee">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card shadow">
+        <div class="card-body">
+
+            <div class="report-actions d-flex justify-content-end mb-3">
+                <a href="/employee_report/excel"
+                    class="btn btn-success me-2">
+                    <i class="bi bi-file-earmark-excel"></i>
+                    Export Excel
+                </a>
+                <a href="/employee_report/pdf"
+                    class="btn btn-danger me-2">
+                    <i class="bi bi-file-earmark-pdf"></i>
+                    Export PDF
+                </a>
+                    <button
+                        class="btn btn-primary"
+                        onclick="window.print()">
+                        <i class="bi bi-printer"></i>
+                        Print
+                    </button>
+            </div>
+
+            <table class="table table-bordered table-hover" id="employeeTable">
+                <thead class="table-dark">
+                <tr>
+                    <th>Employee ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Designation</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% for emp in employees %}
+                <tr>
+                    <td>{{ emp[0] }}</td>
+                    <td>{{ emp[1] }}</td>
+                    <td>{{ emp[2] }}</td>
+                    <td>{{ emp[3] }}</td>
+                    <td>{{ emp[4] }}</td>
+                    <td>{{ emp[5] }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+const search=document.getElementById("searchEmployee");
+search.addEventListener("keyup",function(){
+let value=this.value.toLowerCase();
+let rows=document.querySelectorAll("#employeeTable tbody tr");
+rows.forEach(function(row){
+row.style.display=row.innerText.toLowerCase().includes(value)
+? ""
+: "none";
+});
+});
+</script>
+{% endblock %}
