@@ -1,7 +1,7 @@
 from utils.email_service import send_otp
 
 send_otp(
-    "yadavharsh1602@gmail.com",
+    "recipient@gmail.com",
     "123456"
 )
 
