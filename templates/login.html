@@ -2,91 +2,170 @@
 <html>
 
 <head>
+
     <meta charset="utf-8">
     <title>Login</title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+
+    <!-- Three JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 </head>
+
 
 <body class="login-page">
 
+
+<!-- 3D Background -->
+<canvas id="bg-animation"></canvas>
+
+
+
 <div class="container">
-    <div class="row justify-content-center mt-5">
+
+    <div class="row justify-content-center">
 
         <div class="col-md-4">
 
+
             <div class="card auth-card">
 
-                <div class="card-header bg-primary text-white">
-                    <h3 class="text-center">
-                        IT Asset Management
+
+                <div class="card-header login-header">
+
+                    <h3 class="text-center auth-title">
+                        <i class="bi bi-shield-lock-fill"></i>
+                            IT Asset Management
                     </h3>
+
                 </div>
+
+
 
                 <div class="card-body">
 
+
                     <form method="POST">
 
+
                         <div class="mb-3">
-                            <label class="form-label">Username</label>
+
+                            <label class="form-label">
+                                Username
+                            </label>
+
+
                             <input type="text"
                                    name="username"
                                    class="form-control"
                                    placeholder="Enter Username"
                                    required>
+
                         </div>
 
+
+
                         <div class="mb-3">
-                            <label class="form-label">Password</label>
+
+                            <label class="form-label">
+                                Password
+                            </label>
+
+
                             <input type="password"
                                    name="password"
                                    class="form-control"
                                    placeholder="Enter Password"
                                    required>
+
                         </div>
+
+
 
                         {% if error %}
+
                         <div class="alert alert-danger">
+
                             {{ error }}
+
                         </div>
+
                         {% endif %}
 
-                        <button type="submit" class="btn btn-primary w-100">
+
+
+
+                        <button type="submit"
+                                class="btn login-btn w-100">
+
                             Login
+
                         </button>
+
+
 
                     </form>
 
-                    <!-- Forgot Password -->
+
+
+
                     <div class="text-end mt-3">
+
                         <a href="{{ url_for('auth.forgot_password') }}"
-                           class="text-decoration-none">
+                           class="forgot-link">
+
                             Forgot Password?
+
                         </a>
+
                     </div>
+
+
 
                     <hr>
 
-                    <!-- Sign Up -->
+
+
                     <div class="text-center">
-                        <p class="mb-2">
+
+                        <p>
                             Don't have an account?
                         </p>
 
+
                         <a href="{{ url_for('auth.signup') }}"
-                           class="btn btn-success w-100">
+                           class="btn signup-btn w-100">
+
                             Create New Account
+
                         </a>
+
+
                     </div>
+
 
                 </div>
 
+
             </div>
+
 
         </div>
 
     </div>
+
 </div>
+
+
+
+<script src="{{ url_for('static', filename='js/login-3d.js') }}"></script>
+
+
 </body>
+
 </html>
