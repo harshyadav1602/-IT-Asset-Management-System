@@ -172,3 +172,86 @@ def search_complaints(keyword):
     conn.close()
 
     return complaints
+
+# ==================================
+# Get Complaints By Employee
+# ==================================
+
+def get_complaints_by_employee(employee_id):
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT
+            complaint_id,
+            employee_id,
+            asset_id,
+            issue,
+            complaint_date,
+            status
+        FROM complaint
+        WHERE employee_id=%s
+        ORDER BY complaint_date DESC
+    """, (employee_id,))
+
+    complaints = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return complaints
+
+from datetime import date
+
+# ==========================================
+# Employee Raise Complaint
+# ==========================================
+
+def add_employee_complaint(employee_id, asset_id, issue):
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    # Generate next Complaint ID
+    cur.execute("""
+        SELECT complaint_id
+        FROM complaint
+        ORDER BY complaint_id DESC
+        LIMIT 1
+    """)
+
+    last = cur.fetchone()
+
+    if last:
+        number = int(last[0][3:]) + 1
+    else:
+        number = 1
+
+    complaint_id = f"CMP{number:03d}"
+
+    cur.execute("""
+        INSERT INTO complaint
+        (
+            complaint_id,
+            employee_id,
+            asset_id,
+            issue,
+            complaint_date,
+            status
+        )
+        VALUES (%s,%s,%s,%s,%s,%s)
+    """,
+    (
+        complaint_id,
+        employee_id,
+        asset_id,
+        issue,
+        date.today(),
+        "Pending"
+    ))
+
+    conn.commit()
+
+    cur.close()
+    conn.close()

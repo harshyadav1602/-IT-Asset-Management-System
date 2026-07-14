@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for
+from utils.auth import admin_required
 from utils.pdf_generator import generate_pdf
 from utils.excel_generator import generate_excel
 from models.maintenance import (
@@ -14,6 +15,7 @@ maintenance_bp = Blueprint("maintenance", __name__)
 
 
 @maintenance_bp.route("/maintenance")
+@admin_required
 def maintenance():
 
     if "user" not in session:
@@ -36,6 +38,7 @@ def maintenance():
 # Add Maintenance
 # -----------------------------
 @maintenance_bp.route("/maintenance/add", methods=["GET", "POST"])
+@admin_required
 def add_maintenance_route():
     if "user" not in session:
         return redirect(url_for("auth.login"))
@@ -56,6 +59,7 @@ def add_maintenance_route():
     return render_template("maintenance_form.html")
 
 @maintenance_bp.route("/maintenance/edit/<maintenance_id>", methods=["GET", "POST"])
+@admin_required
 def edit_maintenance(maintenance_id):
     if "user" not in session:
         return redirect(url_for("auth.login"))
@@ -82,6 +86,7 @@ def edit_maintenance(maintenance_id):
     )
 
 @maintenance_bp.route("/maintenance/delete/<maintenance_id>")
+@admin_required
 def delete_maintenance_route(maintenance_id):
     if "user" not in session:
         return redirect(url_for("auth.login"))
@@ -91,6 +96,7 @@ def delete_maintenance_route(maintenance_id):
     return redirect(url_for("maintenance.maintenance"))
 
 @maintenance_bp.route("/maintenance/export/excel")
+@admin_required
 def export_maintenance_excel():
 
     if "user" not in session:
@@ -114,6 +120,7 @@ def export_maintenance_excel():
     )
 
 @maintenance_bp.route("/maintenance/export/pdf")
+@admin_required
 def export_maintenance_pdf():
 
     if "user" not in session:

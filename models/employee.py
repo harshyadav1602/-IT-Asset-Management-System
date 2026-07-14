@@ -155,3 +155,67 @@ def search_employee(keyword):
     conn.close()
 
     return employees
+
+# ==========================================
+# Get Employee Profile
+# ==========================================
+
+def get_employee_profile(employee_id):
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT
+            employee_id,
+            employee_name,
+            department_id,
+            designation,
+            email,
+            phone
+        FROM employee
+        WHERE employee_id=%s
+    """, (employee_id,))
+
+    employee = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    return employee
+
+# ===================================
+# Update Employee Profile
+# ===================================
+
+def update_employee_profile(employee_id,
+                            email,
+                            phone):
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+
+        UPDATE employee
+
+        SET
+
+            email=%s,
+
+            phone=%s
+
+        WHERE employee_id=%s
+
+    """,
+    (
+        email,
+        phone,
+        employee_id
+    ))
+
+    conn.commit()
+
+    cur.close()
+
+    conn.close()

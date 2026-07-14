@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
+from utils.auth import admin_required
 from utils.pdf_generator import generate_pdf
 from utils.excel_generator import generate_excel
 from models.asset import (
@@ -13,6 +14,7 @@ from models.asset import (
 asset_bp = Blueprint("asset", __name__)
 
 @asset_bp.route("/assets")
+@admin_required
 def assets():
 
     if "user" not in session:
@@ -31,6 +33,7 @@ def assets():
     )
 
 @asset_bp.route("/assets/add", methods=["GET", "POST"])
+@admin_required
 def add_asset_route():
     if "user" not in session:
         return redirect(url_for("auth.login"))
@@ -60,6 +63,7 @@ def add_asset_route():
     return render_template("asset_form.html")
 
 @asset_bp.route("/assets/edit/<asset_id>", methods=["GET", "POST"])
+@admin_required
 def edit_asset(asset_id):
     if "user" not in session:
         return redirect(url_for("auth.login"))
@@ -87,6 +91,7 @@ def edit_asset(asset_id):
     )
 
 @asset_bp.route("/assets/delete/<asset_id>")
+@admin_required
 def delete_asset_route(asset_id):
     if "user" not in session:
         return redirect(url_for("auth.login"))
@@ -96,6 +101,7 @@ def delete_asset_route(asset_id):
     return redirect(url_for("asset.assets"))
 
 @asset_bp.route("/assets/export/excel")
+@admin_required
 def export_asset_excel():
 
     if "user" not in session:
@@ -120,6 +126,7 @@ def export_asset_excel():
     )
 
 @asset_bp.route("/assets/export/pdf")
+@admin_required
 def export_asset_pdf():
 
     if "user" not in session:

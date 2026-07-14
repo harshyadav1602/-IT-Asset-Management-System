@@ -59,3 +59,59 @@ def register_user(full_name, username, email, password):
 
     cur.close()
     conn.close()
+
+    from database.db import get_connection
+import bcrypt
+
+
+# ==========================================
+# Get Password By Username
+# ==========================================
+
+def get_password_by_username(username):
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT password
+        FROM users
+        WHERE username=%s
+    """, (username,))
+
+    user = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    return user
+
+
+# ==========================================
+# Update Password
+# ==========================================
+
+def update_password(username, new_password):
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    hashed_password = bcrypt.hashpw(
+        new_password.encode(),
+        bcrypt.gensalt()
+    ).decode()
+
+    cur.execute("""
+        UPDATE users
+        SET password=%s
+        WHERE username=%s
+    """,
+    (
+        hashed_password,
+        username
+    ))
+
+    conn.commit()
+
+    cur.close()
+    conn.close()

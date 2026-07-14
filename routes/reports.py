@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template
 from models.reports import get_asset_report, get_complaint_report, get_employee_report, get_maintenance_report
+from utils.auth import admin_required
 from flask import send_file
 from flask import request
 from utils.pdf_generator import generate_pdf
@@ -10,11 +11,13 @@ import os
 reports_bp = Blueprint("reports", __name__)
 
 @reports_bp.route("/reports")
+@admin_required
 def reports():
 
     return render_template("reports.html")
 
 @reports_bp.route("/employee_report")
+@admin_required
 def employee_report():
     employees = get_employee_report()
     return render_template(
@@ -24,6 +27,7 @@ def employee_report():
     )
 
 @reports_bp.route("/employee_report/excel")
+@admin_required
 def employee_report_excel():
 
     employees = get_employee_report()
@@ -44,6 +48,7 @@ def employee_report_excel():
     )
 
 @reports_bp.route("/employee_report/pdf")
+@admin_required
 def employee_report_pdf():
 
     employees = get_employee_report()
@@ -65,6 +70,7 @@ def employee_report_pdf():
     )
 
 @reports_bp.route("/asset_report")
+@admin_required
 def asset_report():
 
     assets = get_asset_report()
@@ -75,6 +81,7 @@ def asset_report():
     )
 
 @reports_bp.route("/asset_report/excel")
+@admin_required
 def asset_report_excel():
 
     assets = get_asset_report()
@@ -96,6 +103,7 @@ def asset_report_excel():
     )
 
 @reports_bp.route("/asset_report/pdf")
+@admin_required
 def asset_report_pdf():
 
     assets = get_asset_report()
@@ -119,6 +127,7 @@ def asset_report_pdf():
 
 
 @reports_bp.route("/complaint_report")
+@admin_required
 def complaint_report():
 
     complaints = get_complaint_report()
@@ -130,6 +139,7 @@ def complaint_report():
     )
 
 @reports_bp.route("/complaint_report/excel")
+@admin_required
 def complaint_report_excel():
 
     complaints = get_complaint_report()
@@ -150,6 +160,7 @@ def complaint_report_excel():
     )
 
 @reports_bp.route("/complaint_report/pdf")
+@admin_required
 def complaint_report_pdf():
 
     complaints = get_complaint_report()
@@ -171,6 +182,7 @@ def complaint_report_pdf():
     )
 
 @reports_bp.route("/maintenance_report")
+@admin_required
 def maintenance_report():
 
     maintenance = get_maintenance_report()
@@ -182,6 +194,7 @@ def maintenance_report():
     )
 
 @reports_bp.route("/maintenance_report/excel")
+@admin_required
 def maintenance_report_excel():
 
     maintenance = get_maintenance_report()
@@ -202,6 +215,7 @@ def maintenance_report_excel():
     )
 
 @reports_bp.route("/maintenance_report/pdf")
+@admin_required
 def maintenance_report_pdf():
 
     maintenance = get_maintenance_report()

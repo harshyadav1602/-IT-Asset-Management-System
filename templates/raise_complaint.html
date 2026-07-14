@@ -1,0 +1,42 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header bg-danger text-white">
+            <h3>Raise Complaint</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label>Select Asset</label>
+                    <select name="asset_id" class="form-select" required>
+                        <option value="">
+                            Choose Asset
+                        </option>
+                        {% for asset in assets %}
+                        <option value="{{ asset[0] }}">
+                            {{ asset[0] }} - {{ asset[1] }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                </div>
+                <div class="mb-3">
+                    <label>Issue</label>
+                    <textarea name="issue" class="form-control" rows="4" required></textarea>
+                </div>
+                <button
+                    class="btn btn-danger">
+                    Submit Complaint
+                </button>
+                <a href="/my-complaints" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

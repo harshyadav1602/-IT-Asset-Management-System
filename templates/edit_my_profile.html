@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container-fluid">
+    <div class="card shadow">
+        <div class="card-header bg-warning">
+            <h3>Edit My Profile</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" value="{{ employee[4] }}" required>
+                </div>
+                <div class="mb-3">
+                    <label>Phone</label>
+                    <input type="text" class="form-control" name="phone" value="{{ employee[5] }}" required>
+                </div>
+                <button
+                    class="btn btn-success">
+                    Save Changes
+                </button>
+                <a href="/my-profile" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

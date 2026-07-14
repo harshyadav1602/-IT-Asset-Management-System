@@ -20,8 +20,11 @@ def login():
 
         if user:
 
-            session["user"] = user[1]
-
+            session["user"] = user[1]          # username
+            session["user_id"] = user[0]       # database id
+            session["full_name"] = user[3]     # full name
+            session["role"] = user[4]          # role
+            
             return redirect(url_for("dashboard.dashboard"))
 
         else:
@@ -37,6 +40,9 @@ def login():
 def logout():
 
     session.pop("user", None)
+    session.pop("user_id", None)
+    session.pop("full_name", None)
+    session.pop("role", None)
 
     return redirect(url_for("auth.login"))
 

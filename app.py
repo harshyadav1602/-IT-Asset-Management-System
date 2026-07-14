@@ -7,6 +7,7 @@ from routes.complaint import complaint_bp
 from routes.maintenance import maintenance_bp
 from routes.auth import auth_bp
 from routes.reports import reports_bp
+from routes.employee_portal import employee_portal_bp
 
 app = Flask(__name__)
 app.secret_key = "harsh_project_secret_key"
@@ -17,6 +18,7 @@ app.register_blueprint(complaint_bp)
 app.register_blueprint(maintenance_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(reports_bp)
+app.register_blueprint(employee_portal_bp)
 
 @app.route("/")
 def home():

@@ -202,3 +202,53 @@ def search_assets(keyword):
     conn.close()
 
     return assets
+
+# ==========================
+# Get Assets By Employee
+# ==========================
+def get_assets_by_employee(employee_id):
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT
+            asset_id,
+            asset_name,
+            category,
+            brand,
+            model,
+            status,
+            employee_id
+        FROM asset
+        WHERE employee_id=%s
+        ORDER BY asset_id;
+    """, (employee_id,))
+
+    assets = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return assets
+
+def get_employee_asset_list(employee_id):
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT
+            asset_id,
+            asset_name
+        FROM asset
+        WHERE employee_id=%s
+        ORDER BY asset_name
+    """, (employee_id,))
+
+    assets = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return assets

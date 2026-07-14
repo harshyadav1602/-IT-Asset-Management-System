@@ -5,6 +5,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 import os
 import pandas as pd
 from flask import Blueprint, render_template, request, session, redirect, url_for
+from utils.auth import admin_required
 from models.employee import (
     get_all_employees,
     add_employee,
@@ -17,6 +18,7 @@ from models.employee import (
 employee_bp = Blueprint("employee", __name__)
 
 @employee_bp.route("/employees")
+@admin_required
 def employees():
 
     if "user" not in session:
@@ -33,6 +35,7 @@ def employees():
     )
 
 @employee_bp.route("/employees/add", methods=["GET", "POST"])
+@admin_required
 def add_employee_route():
 
     if "user" not in session:
@@ -61,6 +64,7 @@ def add_employee_route():
     return render_template("employee_form.html")
 
 @employee_bp.route("/employees/edit/<employee_id>", methods=["GET", "POST"])
+@admin_required
 def edit_employee(employee_id):
 
     if "user" not in session:
@@ -94,6 +98,7 @@ def edit_employee(employee_id):
     )
 
 @employee_bp.route("/employees/delete/<employee_id>")
+@admin_required
 def delete(employee_id):
 
     if "user" not in session:
@@ -106,6 +111,7 @@ def delete(employee_id):
 
 # for excel export
 @employee_bp.route("/employees/export/excel")
+@admin_required
 def export_employee_excel():
 
     if "user" not in session:
@@ -130,6 +136,7 @@ def export_employee_excel():
     return send_file(filepath, as_attachment=True)
 
 @employee_bp.route("/employees/export/pdf")
+@admin_required
 def export_employee_pdf():
 
     if "user" not in session:

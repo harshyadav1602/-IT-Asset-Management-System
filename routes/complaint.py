@@ -1,6 +1,7 @@
 import pandas as pd
 from flask import app, send_file
 from flask import Blueprint, render_template, request, redirect, url_for, session
+from utils.auth import admin_required
 from utils.pdf_generator import generate_pdf
 from utils.excel_generator import generate_excel
 
@@ -16,6 +17,7 @@ from models.complaint import (
 complaint_bp = Blueprint("complaint", __name__)
 
 @complaint_bp.route("/complaints")
+@admin_required
 def complaints():
 
     if "user" not in session:
@@ -34,6 +36,7 @@ def complaints():
     )
 
 @complaint_bp.route("/complaints/add", methods=["GET", "POST"])
+@admin_required
 def add_complaint_route():
     if "user" not in session:
         return redirect(url_for("auth.login"))
@@ -54,6 +57,7 @@ def add_complaint_route():
     return render_template("complaint_form.html")
 
 @complaint_bp.route("/complaints/edit/<complaint_id>", methods=["GET", "POST"])
+@admin_required
 def edit_complaint_route(complaint_id):
 
     if "user" not in session:
@@ -86,6 +90,7 @@ def edit_complaint_route(complaint_id):
     )
 
 @complaint_bp.route("/complaints/delete/<complaint_id>")
+@admin_required
 def delete_complaint_route(complaint_id):
 
     if "user" not in session:
@@ -96,6 +101,7 @@ def delete_complaint_route(complaint_id):
     return redirect(url_for("complaint.complaints"))
 
 @complaint_bp.route("/complaints/export/excel")
+@admin_required
 def export_complaint_excel():
 
     if "user" not in session:
@@ -119,6 +125,7 @@ def export_complaint_excel():
     )
 
 @complaint_bp.route("/complaints/export/pdf")
+@admin_required
 def export_complaint_pdf():
 
     if "user" not in session:
