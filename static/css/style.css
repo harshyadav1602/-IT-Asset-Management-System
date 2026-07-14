@@ -1114,6 +1114,41 @@ body.dark-mode canvas{
     border-radius:10px;
 
 }
+body.dark-mode .welcome-card{
+
+    background:linear-gradient(135deg,#1e3a8a,#172554);
+
+    color:white;
+
+}
+
+
+body.dark-mode .welcome-card h2,
+body.dark-mode .welcome-card p{
+
+    color:white !important;
+
+}
+body.dark-mode .text-muted{
+
+    color:#d1d5db !important;
+
+}
+
+body.dark-mode .report-card{
+
+    background:#1f2937 !important;
+
+    color:white !important;
+
+}
+
+
+body.dark-mode .report-card h4{
+
+    color:white !important;
+
+}
 /* ===========================
         RESPONSIVE
 =========================== */
@@ -1299,7 +1334,7 @@ color:white;
 border-radius:20px;
 }
 .welcome-card p{
-color:#f8fafc;
+color:white;
 }
 
 .btn{
@@ -1395,4 +1430,270 @@ max-height:350px;
     font-weight:600;
 }
 
+/* ===================================
+   REPORT CARD SAME AS DASHBOARD
+=================================== */
 
+
+.report-card{
+
+    height:320px;
+
+    border-radius:22px;
+
+    border:none;
+
+    color:white;
+
+    transition:0.5s;
+
+    transform-style:preserve-3d;
+
+    perspective:1000px;
+
+}
+
+
+
+/* 3D Hover */
+
+.report-card:hover{
+
+    transform:
+    translateY(-12px)
+    rotateX(8deg)
+    rotateY(-8deg);
+
+    box-shadow:
+    0 25px 45px rgba(0,0,0,.25);
+
+}
+
+
+
+/* Employee */
+
+.employee-card{
+
+    background:#1677ff;
+
+}
+
+
+
+/* Asset */
+
+.asset-card{
+
+    background:#198754;
+
+}
+
+
+
+/* Complaint */
+
+.complaint-card{
+
+    background:#ffc107;
+
+}
+
+
+
+/* Maintenance */
+
+.maintenance-card{
+
+    background:#dc3545;
+
+}
+
+
+
+/* ===============================
+       FLOATING ICON CIRCLE
+================================ */
+
+
+.report-icon{
+
+
+    width:85px;
+
+    height:85px;
+
+
+    margin:auto;
+
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+
+    border-radius:50%;
+
+
+    background:rgba(255,255,255,.20);
+
+
+    backdrop-filter:blur(10px);
+
+
+    font-size:38px;
+
+
+    color:white;
+
+
+    animation:floatingIcon 3s infinite ease-in-out;
+
+
+    box-shadow:
+    0 15px 30px rgba(0,0,0,.25);
+
+
+}
+
+
+
+
+/* Up Down Animation */
+
+@keyframes floatingIcon{
+
+0%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-5px);
+}
+
+100%{
+transform:translateY(0);
+}
+
+}
+
+/* Text */
+
+.report-card h4{
+    color:white!important;
+    font-weight:700;
+}
+
+/* Button */
+
+.report-card .btn{
+    background:white;
+    border:none;
+    color:#111827;
+    font-weight:600;
+}
+
+.report-card .btn:hover{
+    transform:scale(1.08);
+}
+
+/* ===================================
+        DASHBOARD CARD SAME AS REPORT
+=================================== */
+
+.dashboard-card{
+    height:220px;
+    border-radius:22px;
+    border:none;
+    color:white;
+    transition:0.5s;
+    position:relative;
+    overflow:hidden;
+    transform-style:preserve-3d;
+    perspective:1000px;
+}
+
+/* 3D Hover */
+
+.dashboard-card:hover{
+    transform:
+    translateY(-12px)
+    rotateX(8deg)
+    rotateY(-8deg);
+    box-shadow:
+    0 25px 45px rgba(0,0,0,.25);
+}
+
+/* Floating Circle Icon */
+
+.dashboard-card .card-icon{
+    width:75px;
+    height:75px;
+    margin:10px auto 0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    border-radius:50%;
+    background:rgba(255,255,255,.20);
+    backdrop-filter:blur(10px);
+    font-size:34px;
+    color:white;
+    animation:floatingIcon 3s infinite ease-in-out;
+    box-shadow:
+    0 10px 25px rgba(0,0,0,.20);
+}
+
+
+
+/* Card Colors */
+
+
+.dashboard-card.employee-card{
+    background:#1677ff;
+}
+
+.dashboard-card.asset-card{
+    background:#198754;
+}
+
+.dashboard-card.complaint-card{
+    background:#ffc107;
+    color:#111;
+}
+
+.dashboard-card.maintenance-card{
+    background:#dc3545;
+}
+
+/* Dashboard Text */
+
+.dashboard-card .card-body{
+    padding:25px;
+    text-align: center;
+}
+
+.dashboard-card h5{
+    margin-top:20px;
+    font-weight:700;
+    font-size:20px;
+    text-align:center;
+}
+
+.dashboard-card .counter{
+    font-size:40px;
+    font-weight:800;
+}
+
+/* Complaint icon/text adjustment */
+
+.dashboard-card.complaint-card h5,
+.dashboard-card.complaint-card .counter{
+    color:#111;
+}
+
+
+.dashboard-card.complaint-card .card-icon{
+    color:white;
+}

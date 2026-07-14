@@ -1,6 +1,8 @@
 import pandas as pd
 from flask import app, send_file
 from flask import Blueprint, render_template, request, redirect, url_for, session
+from utils.pdf_generator import generate_pdf
+from utils.excel_generator import generate_excel
 
 from models.complaint import (
     get_all_complaints,
@@ -101,20 +103,41 @@ def export_complaint_excel():
 
     complaints = get_all_complaints()
 
-    df = pd.DataFrame(
-        complaints,
-        columns=[
-            "Complaint ID",
-            "Employee ID",
-            "Asset ID",
-            "Issue",
-            "Complaint Date",
-            "Status"
-        ]
+    columns = [
+        "Complaint ID",
+        "Employee ID",
+        "Asset ID",
+        "Issue",
+        "Complaint Date",
+        "Status"
+    ]
+
+    return generate_excel(
+        data=complaints,
+        columns=columns,
+        filename="complaint_report.xlsx"
     )
 
-    filepath = "exports/complaint_report.xlsx"
+@complaint_bp.route("/complaints/export/pdf")
+def export_complaint_pdf():
 
-    df.to_excel(filepath, index=False)
+    if "user" not in session:
+        return redirect(url_for("auth.login"))
 
-    return send_file(filepath, as_attachment=True)
+    complaints = get_all_complaints()
+
+    headers = [
+        "Complaint ID",
+        "Employee ID",
+        "Asset ID",
+        "Issue",
+        "Complaint Date",
+        "Status"
+    ]
+
+    return generate_pdf(
+        report_title="Complaint Report",
+        headers=headers,
+        data=complaints,
+        filename="complaint_report.pdf"
+    )

@@ -1,5 +1,7 @@
 from flask import app, send_file
-from reportlab.pdfgen.canvas import Canvas
+from utils.pdf_generator import generate_pdf
+from reportlab.lib import colors
+from reportlab.lib.styles import getSampleStyleSheet
 import os
 import pandas as pd
 from flask import Blueprint, render_template, request, session, redirect, url_for
@@ -124,11 +126,8 @@ def export_employee_excel():
     )
 
     filepath = "exports/employee_report.xlsx"
-
     df.to_excel(filepath, index=False)
-
     return send_file(filepath, as_attachment=True)
-
 
 @employee_bp.route("/employees/export/pdf")
 def export_employee_pdf():
@@ -138,32 +137,18 @@ def export_employee_pdf():
 
     employees = get_all_employees()
 
-    os.makedirs("exports", exist_ok=True)
-    filepath = "exports/employee_report.pdf"
+    headers = [
+        "Employee ID",
+        "Employee Name",
+        "Department",
+        "Designation",
+        "Email",
+        "Phone"
+    ]
 
-    c = Canvas(filepath)
-
-    c.setFont("Helvetica-Bold", 16)
-    c.drawString(180, 800, "Employee Report")
-
-    y = 760
-
-    c.setFont("Helvetica", 10)
-
-    for emp in employees:
-
-        c.drawString(
-            40,
-            y,
-            f"{emp[0]}   {emp[1]}   {emp[2]}   {emp[3]}"
-        )
-
-        y -= 20
-
-        if y < 50:
-            c.showPage()
-            y = 800
-
-    c.save()
-
-    return send_file(filepath, as_attachment=True)
+    return generate_pdf(
+        report_title="Employee Report",
+        headers=headers,
+        data=employees,
+        filename="employee_report.pdf"
+    )

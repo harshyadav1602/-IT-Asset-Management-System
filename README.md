@@ -69,7 +69,7 @@ This project was developed as a major project to demonstrate practical full-stac
 ### Frontend
 
 * HTML5
-* CSS3
+* CSS
 * JavaScript
 * Bootstrap 5
 * Chart.js
@@ -95,7 +95,6 @@ This project was developed as a major project to demonstrate practical full-stac
 * VS Code
 * Git
 * GitHub
-* Postman
 * pgAdmin
 
 ---

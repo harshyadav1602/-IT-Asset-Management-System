@@ -1,6 +1,6 @@
-import pandas as pd
-from flask import send_file
 from flask import Blueprint, render_template, request, redirect, url_for, session
+from utils.pdf_generator import generate_pdf
+from utils.excel_generator import generate_excel
 from models.asset import (
     get_all_assets,
     add_asset,
@@ -103,21 +103,43 @@ def export_asset_excel():
 
     assets = get_all_assets()
 
-    df = pd.DataFrame(
-        assets,
-        columns=[
-            "Asset ID",
-            "Asset Name",
-            "Category",
-            "Brand",
-            "Model",
-            "Status",
-            "Employee ID"
-        ]
+    columns = [
+        "Asset ID",
+        "Asset Name",
+        "Category",
+        "Brand",
+        "Model",
+        "Status",
+        "Employee ID"
+    ]
+
+    return generate_excel(
+        data=assets,
+        columns=columns,
+        filename="asset_report.xlsx"
     )
 
-    filepath = "exports/asset_report.xlsx"
+@asset_bp.route("/assets/export/pdf")
+def export_asset_pdf():
 
-    df.to_excel(filepath, index=False)
+    if "user" not in session:
+        return redirect(url_for("auth.login"))
 
-    return send_file(filepath, as_attachment=True)
+    assets = get_all_assets()
+
+    headers = [
+        "Asset ID",
+        "Asset Name",
+        "Category",
+        "Brand",
+        "Model",
+        "Status",
+        "Employee ID"
+    ]
+
+    return generate_pdf(
+        report_title="Asset Report",
+        headers=headers,
+        data=assets,
+        filename="asset_report.pdf"
+    )

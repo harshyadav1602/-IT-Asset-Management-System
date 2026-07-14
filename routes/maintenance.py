@@ -1,7 +1,6 @@
-import pandas as pd
-from flask import app, send_file
 from flask import Blueprint, render_template, request, redirect, session, url_for
-
+from utils.pdf_generator import generate_pdf
+from utils.excel_generator import generate_excel
 from models.maintenance import (
     get_all_maintenance,
     add_maintenance,
@@ -99,20 +98,41 @@ def export_maintenance_excel():
 
     maintenance = get_all_maintenance()
 
-    df = pd.DataFrame(
-        maintenance,
-        columns=[
-            "Maintenance ID",
-            "Asset ID",
-            "Engineer Name",
-            "Maintenance Date",
-            "Cost",
-            "Remarks"
-        ]
+    columns = [
+        "Maintenance ID",
+        "Asset ID",
+        "Engineer Name",
+        "Maintenance Date",
+        "Cost",
+        "Remarks"
+    ]
+
+    return generate_excel(
+        data=maintenance,
+        columns=columns,
+        filename="maintenance_report.xlsx"
     )
 
-    filepath = "exports/maintenance_report.xlsx"
+@maintenance_bp.route("/maintenance/export/pdf")
+def export_maintenance_pdf():
 
-    df.to_excel(filepath, index=False)
+    if "user" not in session:
+        return redirect(url_for("auth.login"))
 
-    return send_file(filepath, as_attachment=True)
+    maintenance = get_all_maintenance()
+
+    headers = [
+        "Maintenance ID",
+        "Asset ID",
+        "Engineer",
+        "Date",
+        "Cost",
+        "Remarks"
+    ]
+
+    return generate_pdf(
+        report_title="Maintenance Report",
+        headers=headers,
+        data=maintenance,
+        filename="maintenance_report.pdf"
+    )
