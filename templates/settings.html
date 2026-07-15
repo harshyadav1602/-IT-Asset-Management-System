@@ -1,0 +1,75 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-dark text-white">
+            <h3>
+                <i class="bi bi-gear-fill"></i>
+                Settings
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            <div class="list-group">
+
+                <a href="/change-password"
+                   class="list-group-item list-group-item-action">
+
+                    <i class="bi bi-key-fill text-primary"></i>
+
+                    Change Password
+
+                </a>
+                <br>
+                <a href="/upload-photo"
+                   class="list-group-item list-group-item-action">
+
+                    <i class="bi bi-camera-fill"></i>
+
+                    Upload Profile Photo
+                </a>
+                <br>
+                <!-- System Information ADD HERE -->
+
+                <a href="{{ url_for('employee_portal.system_info') }}"
+                   class="list-group-item list-group-item-action">
+                    <i class="bi bi-info-circle-fill text-success"></i>
+                    System Information
+                </a>
+                <br>
+                <a href="{{ url_for('employee_portal.my_profile') }}" class="btn btn-primary">
+                    <i class="bi bi-person-circle"></i>
+                        My Profile
+                </a>
+                <div class="card shadow mt-4">
+                    <div class="card-header bg-danger text-white">
+                    <h5>
+                        <i class="bi bi-box-arrow-right"></i>
+                            Logout
+                    </h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">
+                            Securely sign out from your account.
+                        </p>
+                        <a href="{{ url_for('auth.logout') }}"
+                            class="btn btn-danger">
+                            <i class="bi bi-box-arrow-right"></i>
+                                Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

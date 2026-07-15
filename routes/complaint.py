@@ -35,27 +35,6 @@ def complaints():
         complaints=complaints
     )
 
-@complaint_bp.route("/complaints/add", methods=["GET", "POST"])
-@admin_required
-def add_complaint_route():
-    if "user" not in session:
-        return redirect(url_for("auth.login"))
-
-    if request.method == "POST":
-
-        add_complaint(
-            request.form["complaint_id"],
-            request.form["employee_id"],
-            request.form["asset_id"],
-            request.form["issue"],
-            request.form["complaint_date"],
-            request.form["status"]
-        )
-
-        return redirect(url_for("complaint.complaints"))
-
-    return render_template("complaint_form.html")
-
 @complaint_bp.route("/complaints/edit/<complaint_id>", methods=["GET", "POST"])
 @admin_required
 def edit_complaint_route(complaint_id):

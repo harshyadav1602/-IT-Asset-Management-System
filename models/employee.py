@@ -219,3 +219,54 @@ def update_employee_profile(employee_id,
     cur.close()
 
     conn.close()
+
+from database.db import get_connection
+
+def get_employee_dashboard_counts(employee_id):
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    # Total Assets
+    cur.execute("""
+        SELECT COUNT(*)
+        FROM asset
+        WHERE employee_id=%s
+    """, (employee_id,))
+    total_assets = cur.fetchone()[0]
+
+    # Total Complaints
+    cur.execute("""
+        SELECT COUNT(*)
+        FROM complaint
+        WHERE employee_id=%s
+    """, (employee_id,))
+    total_complaints = cur.fetchone()[0]
+
+    # Pending Complaints
+    cur.execute("""
+        SELECT COUNT(*)
+        FROM complaint
+        WHERE employee_id=%s
+        AND status='Pending'
+    """, (employee_id,))
+    pending = cur.fetchone()[0]
+
+    # Resolved Complaints
+    cur.execute("""
+        SELECT COUNT(*)
+        FROM complaint
+        WHERE employee_id=%s
+        AND status='Resolved'
+    """, (employee_id,))
+    resolved = cur.fetchone()[0]
+
+    cur.close()
+    conn.close()
+
+    return {
+        "assets": total_assets,
+        "complaints": total_complaints,
+        "pending": pending,
+        "resolved": resolved
+    }

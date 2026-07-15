@@ -3,7 +3,6 @@ import bcrypt
 
 
 def check_login(username, password):
-
     conn = get_connection()
     cur = conn.cursor()
 
@@ -20,7 +19,6 @@ def check_login(username, password):
 
     if user:
         stored_password = user[2]
-
         if bcrypt.checkpw(
             password.encode("utf-8"),
             stored_password.encode("utf-8")
@@ -34,8 +32,8 @@ def check_login(username, password):
 # REGISTER USER
 # ============================================
 
-def register_user(full_name, username, email, password):
 
+def register_user(full_name, username, email, password):
     conn = get_connection()
     cur = conn.cursor()
 
@@ -60,16 +58,13 @@ def register_user(full_name, username, email, password):
     cur.close()
     conn.close()
 
-    from database.db import get_connection
-import bcrypt
-
 
 # ==========================================
 # Get Password By Username
 # ==========================================
 
-def get_password_by_username(username):
 
+def get_password_by_username(username):
     conn = get_connection()
     cur = conn.cursor()
 
@@ -91,8 +86,8 @@ def get_password_by_username(username):
 # Update Password
 # ==========================================
 
-def update_password(username, new_password):
 
+def update_password(username, new_password):
     conn = get_connection()
     cur = conn.cursor()
 
@@ -106,12 +101,46 @@ def update_password(username, new_password):
         SET password=%s
         WHERE username=%s
     """,
-    (
-        hashed_password,
-        username
-    ))
+                (
+                    hashed_password,
+                    username
+                ))
 
     conn.commit()
 
     cur.close()
     conn.close()
+
+
+def update_profile_photo(username, filename):
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        UPDATE users
+        SET profile_photo=%s
+        WHERE username=%s
+    """, (filename, username))
+
+    conn.commit()
+
+    cur.close()
+    conn.close()
+
+
+def get_profile_photo(username):
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT profile_photo
+        FROM users
+        WHERE username=%s
+    """, (username,))
+
+    photo = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    return photo

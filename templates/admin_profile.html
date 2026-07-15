@@ -1,0 +1,60 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+                <i class="bi bi-person-circle"></i>
+                Admin Profile
+            </h3>
+
+        </div>
+
+        <div class="card-body text-center">
+
+            {% if admin[4] %}
+            <img src="{{ url_for('static',
+            filename='uploads/profile/' + admin[4]) }}"
+            class="profile-photo-large">
+            {% else %}
+            <i class="bi bi-person-circle display-1"></i>
+            {% endif %}
+
+            <hr>
+
+            <table class="table">
+
+                <tr>
+                    <th>Full Name</th>
+                    <td>{{ admin[0] }}</td>
+                </tr>
+
+                <tr>
+                    <th>Username</th>
+                    <td>{{ admin[1] }}</td>
+                </tr>
+
+                <tr>
+                    <th>Email</th>
+                    <td>{{ admin[2] }}</td>
+                </tr>
+
+                <tr>
+                    <th>Role</th>
+                    <td>{{ admin[3] }}</td>
+                </tr>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -7,7 +7,13 @@
 <div class="card shadow">
 
 <div class="card-header bg-primary text-white">
-<h3>Add Complaint</h3>
+<h3>
+{% if edit %}
+Update Complaint Status
+{% else %}
+Add Complaint
+{% endif %}
+</h3>
 </div>
 
 <div class="card-body">
@@ -22,33 +28,73 @@
 
 <div class="mb-3">
 <label>Employee ID</label>
-<input type="text" name="employee_id" class="form-control" value="{{ complaint[1] if complaint else '' }}" required>
+<input
+    type="text"
+    name="employee_id"
+    class="form-control"
+    value="{{ complaint[1] if complaint else '' }}"
+    {% if edit %}readonly{% endif %}
+    required>
 </div>
 
 <div class="mb-3">
 <label>Asset ID</label>
-<input type="text" name="asset_id" class="form-control" value="{{ complaint[2] if complaint else '' }}" required>
+<input
+    type="text"
+    name="asset_id"
+    class="form-control"
+    value="{{ complaint[2] if complaint else '' }}"
+    {% if edit %}readonly{% endif %}
+    required>
 </div>
 
 <div class="mb-3">
 <label>Issue</label>
-<input type="text" name="issue" class="form-control" value="{{ complaint[3] if complaint else '' }}" required>
+<input
+    type="text"
+    name="issue"
+    class="form-control"
+    value="{{ complaint[3] if complaint else '' }}"
+    {% if edit %}readonly{% endif %}
+    required>
 </div>
 
 <div class="mb-3">
 <label>Complaint Date</label>
-<input type="date" name="complaint_date" class="form-control" value="{{ complaint[4] if complaint else '' }}" required>
+<input
+    type="date"
+    name="complaint_date"
+    class="form-control"
+    value="{{ complaint[4] if complaint else '' }}"
+    {% if edit %}readonly{% endif %}
+    required>
 </div>
 
 <div class="mb-3">
+
 <label>Status</label>
 
 <select name="status" class="form-select">
 
-<option>Select</option>
-<option>Pending</option>
-<option>In Progress</option>
-<option>Resolved</option>
+    <option value="Pending"
+    {% if complaint and complaint[5]=="Pending" %}selected{% endif %}>
+        Pending
+    </option>
+
+    <option value="In Progress"
+    {% if complaint and complaint[5]=="In Progress" %}selected{% endif %}>
+        In Progress
+    </option>
+
+    <option value="Resolved"
+    {% if complaint and complaint[5]=="Resolved" %}selected{% endif %}>
+        Resolved
+    </option>
+
+    <option value="Rejected"
+    {% if complaint and complaint[5]=="Rejected" %}selected{% endif %}>
+        Rejected
+    </option>
 
 </select>
 

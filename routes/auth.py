@@ -23,9 +23,17 @@ def login():
             session["user"] = user[1]          # username
             session["user_id"] = user[0]       # database id
             session["full_name"] = user[3]     # full name
-            session["role"] = user[4]          # role
+            session["role"] = user[4]
+            session["profile_photo"] = user[7]  
             
-            return redirect(url_for("dashboard.dashboard"))
+            print("Logged in User:", session["user"])
+            print("Role:", session["role"])       # role
+            
+            if session["role"] == "Admin":
+                return redirect(url_for("dashboard.dashboard"))
+
+            elif session["role"] == "Employee":
+                return redirect(url_for("employee_portal.employee_dashboard"))
 
         else:
 
@@ -43,6 +51,7 @@ def logout():
     session.pop("user_id", None)
     session.pop("full_name", None)
     session.pop("role", None)
+    session.pop("profile_photo", None)
 
     return redirect(url_for("auth.login"))
 

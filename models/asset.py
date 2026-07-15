@@ -247,7 +247,7 @@ def get_employee_asset_list(employee_id):
     """, (employee_id,))
 
     assets = cur.fetchall()
-
+    print("Assets Found:", assets)
     cur.close()
     conn.close()
 

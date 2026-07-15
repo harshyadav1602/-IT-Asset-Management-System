@@ -8,9 +8,12 @@ from routes.maintenance import maintenance_bp
 from routes.auth import auth_bp
 from routes.reports import reports_bp
 from routes.employee_portal import employee_portal_bp
+import os
 
+UPLOAD_FOLDER = "static/uploads/profile"
 app = Flask(__name__)
 app.secret_key = "harsh_project_secret_key"
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
 app.register_blueprint(dashboard_bp)
 app.register_blueprint(employee_bp)
 app.register_blueprint(asset_bp)

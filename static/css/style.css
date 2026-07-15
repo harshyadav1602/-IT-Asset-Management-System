@@ -1697,3 +1697,167 @@ transform:translateY(0);
 .dashboard-card.complaint-card .card-icon{
     color:white;
 }
+.profile-img{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid #fff;
+    margin-right:8px;
+}
+
+.profile-photo-large{
+    width:150px;
+    height:150px;
+    border-radius:50%;
+    object-fit:cover;
+    border:5px solid #0d6efd;
+}
+
+/* =====================================
+   EMPLOYEE DASHBOARD 3D CARDS
+===================================== */
+
+.employee-cards{
+    display:grid;
+    grid-template-columns:
+    repeat(auto-fit,minmax(240px,1fr));
+    gap:25px;
+    margin-top:30px;
+}
+/* Main Card */
+
+.emp-card{
+    height:150px;
+    border-radius:25px;
+    padding:25px;
+    display:flex;
+    align-items:center;
+    gap:20px;
+    color:white;
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+    transform-style:preserve-3d;
+    transition:0.5s ease;
+    box-shadow:
+    0 15px 30px rgba(0,0,0,0.25);
+}
+
+/* 3D Hover Effect */
+
+.emp-card:hover{
+    transform:
+    translateY(-12px)
+    rotateX(8deg)
+    rotateY(-8deg);
+    box-shadow:
+    0 30px 50px rgba(0,0,0,0.35);
+}
+
+/* Floating Icon Circle */
+
+.emp-icon{
+    width:75px;
+    height:75px;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:
+    rgba(255,255,255,0.25);
+    backdrop-filter:blur(10px);
+    font-size:35px;
+    box-shadow:
+    inset 0 0 15px rgba(255,255,255,0.4);
+    animation:
+    floatingIcon 3s ease-in-out infinite;
+}
+
+/* Icon Floating Animation */
+@keyframes floatingIcon{
+
+    0%,100%{
+        transform:translateY(0);
+    }
+    50%{
+        transform:translateY(-10px);
+    }
+}
+
+/* Text */
+
+.emp-content h3{
+    font-size:38px;
+    font-weight:700;
+    margin:0;
+}
+
+.emp-content p{
+    margin:5px 0 0;
+    font-size:18px;
+    font-weight:500;
+}
+
+/* =====================================
+        CARD COLORS
+===================================== */
+
+/* My Assets */
+
+.assets-card{
+    background:
+    linear-gradient(135deg,#2196f3,#1565c0);
+}
+
+/* Complaints */
+
+.complaint-card{
+    background:
+    linear-gradient(135deg,#ffb300,#f57c00);
+}
+
+/* Pending */
+
+.pending-card{
+    background:
+    linear-gradient(135deg,#ff416c,#ff4b2b);
+}
+
+/* Resolved */
+
+.resolved-card{
+    background:
+    linear-gradient(135deg,#00b09b,#96c93d);
+}
+
+/* Shine Animation */
+
+.emp-card::before{
+
+    content:"";
+    position:absolute;
+    top:-50%;
+    left:-120px;
+    width:80px;
+    height:250%;
+    background:
+    rgba(255,255,255,0.35);
+    transform:
+    rotate(35deg);
+    transition:0.7s;
+}
+
+.emp-card:hover::before{
+    left:120%;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+    .employee-cards{
+        grid-template-columns:1fr;
+    }
+
+}

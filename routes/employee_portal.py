@@ -3,6 +3,7 @@ from flask import request
 from utils.auth import employee_required
 from models.asset import get_assets_by_employee
 from models.complaint import get_complaints_by_employee
+from models.employee import get_employee_dashboard_counts
 from models.employee import get_employee_profile
 from models.employee import update_employee_profile
 from models.complaint import add_employee_complaint
@@ -14,6 +15,14 @@ from models.auth import (
     get_password_by_username,
     update_password
 )
+from werkzeug.utils import secure_filename
+import os
+from models.auth import (
+    update_profile_photo,
+    get_profile_photo
+)
+from flask import current_app
+import time
 
 employee_portal_bp = Blueprint("employee_portal", __name__)
 
@@ -24,16 +33,13 @@ def get_employee_id(username):
 
     cur.execute("""
         SELECT employee_id
-        FROM employee
-        WHERE email = (
-            SELECT email
-            FROM users
-            WHERE username=%s
-        )
+        FROM users
+        WHERE username = %s
     """, (username,))
 
     employee = cur.fetchone()
-
+    print("Username:", username)
+    print("Database Result:", employee)
     cur.close()
     conn.close()
 
@@ -41,6 +47,34 @@ def get_employee_id(username):
         return employee[0]
 
     return None
+
+# ==============================
+# Employee Dashboard
+# ==============================
+
+@employee_portal_bp.route("/employee-dashboard")
+@employee_required
+def employee_dashboard():
+
+    username = session["user"]
+
+    employee_id = get_employee_id(username)
+
+    employee = get_employee_profile(employee_id)
+
+    counts = get_employee_dashboard_counts(employee_id)
+
+    assets = get_assets_by_employee(employee_id)
+
+    complaints = get_complaints_by_employee(employee_id)
+
+    return render_template(
+        "employee_dashboard.html",
+        employee=employee,
+        counts=counts,
+        assets=assets,
+        complaints=complaints
+    )
 
 @employee_portal_bp.route("/my-assets")
 @employee_required
@@ -125,7 +159,6 @@ def edit_my_profile():
     "/change-password",
     methods=["GET","POST"]
 )
-@employee_required
 def change_password():
 
     if request.method == "POST":
@@ -209,4 +242,72 @@ def raise_complaint():
     return render_template(
         "raise_complaint.html",
         assets=assets
+    )
+
+@employee_portal_bp.route("/settings")
+def settings():
+
+    if "user" not in session:
+        return redirect(url_for("auth.login"))
+
+    return render_template("settings.html")
+
+@employee_portal_bp.route(
+    "/upload-photo",
+    methods=["GET","POST"]
+)
+def upload_photo():
+
+    if "user" not in session:
+        return redirect(url_for("auth.login"))
+
+    if request.method == "POST":
+
+        file = request.files["photo"]
+
+        if file.filename != "":
+
+            filename = (
+                session["user"] +
+                "_" +
+                str(int(time.time())) +
+                "_" +
+                secure_filename(file.filename)
+)
+
+            file.save(
+                os.path.join(
+                    current_app.config["UPLOAD_FOLDER"],
+                    filename
+                )
+            )
+
+            update_profile_photo(
+                session["user"],
+                filename
+            )
+            session["profile_photo"] = filename
+
+            flash("Profile photo updated successfully!")
+
+            return redirect(
+                url_for("employee_portal.settings")
+            )
+
+    return render_template(
+        "upload_photo.html"
+    )
+
+# ==============================
+# System Information
+# ==============================
+
+@employee_portal_bp.route("/system-info")
+def system_info():
+
+    if "user" not in session:
+        return redirect(url_for("auth.login"))
+
+    return render_template(
+        "system_info.html"
     )
