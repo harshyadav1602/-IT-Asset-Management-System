@@ -1,0 +1,66 @@
+{% extends "index.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow-lg rounded-4">
+
+        <div class="card-header bg-warning">
+            <h2>
+                <i class="bi bi-pencil-square"></i>
+                Edit My Profile
+            </h2>
+        </div>
+
+        <div class="card-body">
+
+            <form method="POST">
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        class="form-control"
+                        value="{{ admin[3] }}"
+                        required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="text"
+                        name="phone"
+                        class="form-control"
+                        value="{{ admin[4] }}"
+                        maxlength="10"
+                        required>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-check-circle"></i>
+                    Saves Changes
+                </button>
+
+                <a href="{{ url_for('dashboard.admin_profile') }}"
+                   class="btn btn-secondary">
+                    <i class="bi bi-check-circle"></i>
+                    Cancel
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

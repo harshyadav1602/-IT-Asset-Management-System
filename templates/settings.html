@@ -42,10 +42,23 @@
                     System Information
                 </a>
                 <br>
-                <a href="{{ url_for('employee_portal.my_profile') }}" class="btn btn-primary">
+                {% if session.get("role") == "Admin" %}
+
+                <a href="{{ url_for('dashboard.admin_profile') }}"
+                class="list-group-item list-group-item-action">
                     <i class="bi bi-person-circle"></i>
-                        My Profile
+                    My Profile
                 </a>
+
+                {% else %}
+
+                <a href="{{ url_for('employee_portal.my_profile') }}"
+                class="list-group-item list-group-item-action">
+                    <i class="bi bi-person-circle"></i>
+                    My Profile
+                </a>
+
+                {% endif %}
                 <div class="card shadow mt-4">
                     <div class="card-header bg-danger text-white">
                     <h5>

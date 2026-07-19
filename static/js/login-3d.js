@@ -1,160 +1,163 @@
 const canvas = document.getElementById("bg-animation");
 
-
 const scene = new THREE.Scene();
-
-
-scene.fog = new THREE.Fog(
-    0x020617,
-    5,
-    20
-);
-
-
 
 const camera = new THREE.PerspectiveCamera(
     60,
-    window.innerWidth/window.innerHeight,
+    window.innerWidth / window.innerHeight,
     0.1,
     1000
 );
 
-
+camera.position.z = 6;
 
 const renderer = new THREE.WebGLRenderer({
-    canvas:canvas,
-    alpha:true
+    canvas: canvas,
+    alpha: true,
+    antialias: true
 });
-
 
 renderer.setSize(
     window.innerWidth,
     window.innerHeight
 );
 
+renderer.setPixelRatio(window.devicePixelRatio);
 
+// =====================================
+// FLOATING PARTICLES
+// =====================================
 
-camera.position.z = 6;
+const particleCount = 180;
 
+const positions = [];
 
+for (let i = 0; i < particleCount; i++) {
 
-// =======================
-// 3D NETWORK GRID
-// =======================
-
-
-const grid = new THREE.GridHelper(
-    20,
-    40,
-    0x00ffff,
-    0x003344
-);
-
-
-grid.rotation.x = Math.PI/2.5;
-
-scene.add(grid);
-
-
-
-
-// =======================
-// GLOWING DATA NODES
-// =======================
-
-
-let nodes=[];
-
-
-for(let i=0;i<80;i++)
-{
-
-
-    let geometry =
-    new THREE.SphereGeometry(
-        0.06,
-        16,
-        16
+    positions.push(
+        (Math.random() - 0.5) * 18,
+        (Math.random() - 0.5) * 10,
+        (Math.random() - 0.5) * 8
     );
 
+}
 
-    let material =
-    new THREE.MeshBasicMaterial({
+const particleGeometry = new THREE.BufferGeometry();
 
-        color:0x00ffff
+particleGeometry.setAttribute(
+    "position",
+    new THREE.Float32BufferAttribute(
+        positions,
+        3
+    )
+);
+
+const particleMaterial = new THREE.PointsMaterial({
+
+    color: 0x00ffff,
+
+    size: 0.08,
+
+    transparent: true,
+
+    opacity: 0.9
+
+});
+
+const particles = new THREE.Points(
+    particleGeometry,
+    particleMaterial
+);
+
+scene.add(particles);
+
+// =====================================
+// GLOWING ORBS
+// =====================================
+
+const orbs = [];
+
+for (let i = 0; i < 12; i++) {
+
+    const geometry = new THREE.SphereGeometry(
+        0.18,
+        24,
+        24
+    );
+
+    const material = new THREE.MeshBasicMaterial({
+
+        color: 0x00d4ff,
+
+        transparent: true,
+
+        opacity: 0.6
 
     });
 
-
-
-    let node =
-    new THREE.Mesh(
+    const orb = new THREE.Mesh(
         geometry,
         material
     );
 
+    orb.position.set(
 
-    node.position.x =
-    (Math.random()-0.5)*12;
+        (Math.random() - 0.5) * 14,
 
+        (Math.random() - 0.5) * 8,
 
-    node.position.y =
-    (Math.random()-0.5)*8;
+        (Math.random() - 0.5) * 4
 
+    );
 
-    node.position.z =
-    (Math.random()-0.5)*5;
+    orb.userData.speed =
 
+        0.002 + Math.random() * 0.003;
 
+    scene.add(orb);
 
-    scene.add(node);
-
-    nodes.push(node);
+    orbs.push(orb);
 
 }
 
+// =====================================
+// AMBIENT LIGHT
+// =====================================
 
+const ambient = new THREE.AmbientLight(
+    0xffffff,
+    1
+);
 
+scene.add(ambient);
 
-// =======================
+// =====================================
 // ANIMATION
-// =======================
+// =====================================
 
-
-function animate()
-{
+function animate() {
 
     requestAnimationFrame(animate);
 
+    particles.rotation.y += 0.0008;
 
+    particles.rotation.x += 0.0003;
 
-    grid.position.z +=0.02;
+    orbs.forEach((orb) => {
 
+        orb.position.y += orb.userData.speed;
 
+        orb.rotation.x += 0.01;
 
-    if(grid.position.z>1)
-    {
-        grid.position.z=0;
-    }
+        orb.rotation.y += 0.01;
 
+        if (orb.position.y > 5) {
 
+            orb.position.y = -5;
 
-    nodes.forEach(node=>{
-
-        node.rotation.x +=0.02;
-
-        node.position.y +=0.002;
-
-
-        if(node.position.y>4)
-        {
-            node.position.y=-4;
         }
 
-
     });
-
-
 
     renderer.render(
         scene,
@@ -163,30 +166,22 @@ function animate()
 
 }
 
-
-
 animate();
 
+// =====================================
+// RESPONSIVE
+// =====================================
 
+window.addEventListener("resize", () => {
 
+    camera.aspect =
+        window.innerWidth / window.innerHeight;
 
+    camera.updateProjectionMatrix();
 
-window.addEventListener(
-"resize",
-()=>{
-
-
-camera.aspect =
-window.innerWidth/window.innerHeight;
-
-
-camera.updateProjectionMatrix();
-
-
-renderer.setSize(
-window.innerWidth,
-window.innerHeight
-);
-
+    renderer.setSize(
+        window.innerWidth,
+        window.innerHeight
+    );
 
 });

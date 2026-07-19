@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session, redirect, url_for
+from flask import Blueprint, render_template, request, session, redirect, url_for
 from database.db import get_connection
 from utils.auth import admin_required
 from models.dashboard import (
@@ -48,6 +48,7 @@ def admin_profile():
             username,
             email,
             role,
+            phone,
             profile_photo
         FROM users
         WHERE username=%s
@@ -60,5 +61,56 @@ def admin_profile():
 
     return render_template(
         "admin_profile.html",
+        admin=admin
+    )
+
+@dashboard_bp.route("/edit-admin-profile", methods=["GET", "POST"])
+@admin_required
+def edit_admin_profile():
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    if request.method == "POST":
+
+        email = request.form["email"]
+        phone = request.form["phone"]
+
+        cur.execute("""
+            UPDATE users
+            SET email=%s,
+                phone=%s
+            WHERE username=%s
+        """, (
+            email,
+            phone,
+            session["user"]
+        ))
+
+        conn.commit()
+
+        cur.close()
+        conn.close()
+
+        return redirect(url_for("dashboard.admin_profile"))
+
+    cur.execute("""
+        SELECT
+            full_name,
+            username,
+            role,
+            email,
+            phone
+        FROM users
+        WHERE username=%s
+    """, (session["user"],))
+
+    admin = cur.fetchone()
+
+    cur.close()
+    conn.close()
+
+    return render_template(
+        "edit_admin_profile.html",
         admin=admin
     )

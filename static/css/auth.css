@@ -1,8 +1,206 @@
-/* Full Page Background */
+/*=====================================================
+        IT ASSET MANAGEMENT SYSTEM
+             AUTH.CSS (PART-1)
+======================================================*/
 
-.login-page{
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+/*=========================
+        RESET
+=========================*/
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    font-family:'Poppins',sans-serif;
+    overflow-x:hidden;
+    color:#fff;
+
+}
+
+/*=========================
+      BACKGROUND
+=========================*/
+
+.login-page,
+.signup-page,
+.forgot-password-page{
 
     min-height:100vh;
+
+    background:
+    radial-gradient(circle at top,#0d3b66,#07111f 65%,#030712);
+
+    position:relative;
+
+    overflow-x:hidden;
+
+}
+
+/*=========================
+      THREE JS CANVAS
+=========================*/
+
+#bg-animation,
+#forgot-bg{
+
+    position:fixed;
+
+    inset:0;
+
+    width:100%;
+
+    height:100%;
+
+    z-index:-2;
+
+}
+
+/*=========================
+     GRADIENT OVERLAY
+=========================*/
+
+.login-page::before,
+.signup-page::before,
+.forgot-password-page::before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+
+    radial-gradient(circle at left,
+    rgba(0,255,255,.08),
+    transparent 45%),
+
+
+    radial-gradient(circle at right,
+    rgba(13,110,253,.10),
+    transparent 45%);
+
+    z-index:-1;
+
+}
+
+/*=========================
+      MAIN LAYOUT
+=========================*/
+
+.login-wrapper{
+
+    width:100%;
+
+    min-height:100vh;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:80px;
+
+    padding:40px 70px;
+
+}
+
+/*=========================
+      LEFT SIDE
+=========================*/
+
+.login-left{
+
+    flex:1;
+
+    max-width:700px;
+
+    animation:slideLeft 1s ease;
+
+}
+
+.login-left h1{
+
+    font-size:58px;
+
+    font-weight:800;
+
+    line-height:1.15;
+
+    margin-bottom:25px;
+
+}
+
+.login-left span{
+
+    color:#00e5ff;
+
+}
+
+.login-left p{
+
+    font-size:20px;
+
+    color:#d9ecff;
+
+    line-height:34px;
+
+    margin-bottom:35px;
+
+}
+
+/*=========================
+     FEATURE LIST
+=========================*/
+
+.feature-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+}
+
+.feature-list div{
+
+    display:flex;
+
+    align-items:center;
+
+    font-size:18px;
+
+}
+
+.feature-list i{
+
+    color:#00ff95;
+
+    margin-right:14px;
+
+    font-size:22px;
+
+}
+
+/*=========================
+      RIGHT SIDE
+=========================*/
+
+.login-right{
+
+    flex:1;
 
     display:flex;
 
@@ -10,424 +208,1012 @@
 
     align-items:center;
 
-    background:
-        linear-gradient(
-            rgba(0,0,0,.55),
-            rgba(0,0,0,.55)
-        ),
-        url("../images/login.png");
-
-    background-size:cover;
-
-    background-position:center;
-
-    background-repeat:no-repeat;
+    animation:slideRight 1s ease;
 
 }
 
-/* Card */
+/*=========================
+      GLASS CARD
+=========================*/
 
 .auth-card{
 
-    width:430px;
+    width:100%;
 
-    border:none;
+    max-width:470px;
 
-    border-radius:18px;
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(18px);
+
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.18);
+
+    border-radius:24px;
+
+    box-shadow:
+
+    0 25px 60px rgba(0,0,0,.40),
+
+    0 0 25px rgba(0,255,255,.12);
 
     overflow:hidden;
 
-    box-shadow:0 10px 30px rgba(0,0,0,.35);
+}
 
-    animation:fadeIn .6s;
+/*=========================
+      CARD BODY
+=========================*/
+
+.auth-card .card-body{
+    padding:45px !important;
+    box-sizing:border-box;
+}
+
+.auth-card h2{
+
+    font-weight:700;
+
+    margin-top:15px;
+
+    color:#fff;
 
 }
 
-/* Header */
+.auth-card p{
 
-.auth-header{
-
-    background:#2563eb;
-
-    color:white;
-
-    padding:18px;
-
-    text-align:center;
+    color:#d9e8ff;
 
 }
 
-/* Body */
+/*=========================
+      LOGIN ICON
+=========================*/
 
-.auth-body{
+.login-icon{
 
-    background:white;
+    font-size:70px;
 
-    padding:30px;
+    color:#00d4ff;
+
+    animation:floatIcon 3s ease-in-out infinite;
 
 }
 
-/* Input */
+/*=========================
+        LABEL
+=========================*/
+
+label{
+
+    font-weight:500;
+
+    color:#fff;
+
+    margin-bottom:8px;
+
+}
+
+/*=========================
+      INPUT
+=========================*/
 
 .form-control{
 
-    border-radius:10px;
+    height:50px;
 
-    padding:12px;
+    border-radius:12px;
 
-}
+    border:1px solid rgba(255,255,255,.18);
 
-/* Button */
+    background:rgba(255,255,255,.08);
 
-.btn-primary{
+    color:#fff;
 
-    border-radius:10px;
-
-    padding:12px;
-
-    font-weight:600;
+    padding:12px 18px;
 
 }
 
-.btn-success{
+.form-control::placeholder{
 
-    border-radius:10px;
-
-}
-
-.btn-warning{
-
-    border-radius:10px;
+    color:#d5d5d5;
 
 }
 
-/* Links */
+.form-control:focus{
 
-.auth-links{
+    background:rgba(255,255,255,.12);
+
+    color:#fff;
+
+    border-color:#00d4ff;
+
+    box-shadow:0 0 15px rgba(0,212,255,.25);
+
+}
+
+/*=========================
+      ALERT
+=========================*/
+
+.alert{
+
+    border-radius:12px;
+
+}
+
+/*=========================
+      CHECKBOX ROW
+=========================*/
+
+.remember-row{
 
     display:flex;
 
     justify-content:space-between;
 
-    margin-top:15px;
+    align-items:center;
+
+    margin:18px 0 24px;
+
+    font-size:14px;
 
 }
 
-.auth-links a{
+.remember-row a{
+
+    color:#8fdcff;
 
     text-decoration:none;
 
+}
+
+.remember-row a:hover{
+
+    color:white;
+
+}
+
+/*=====================================================
+        AUTH.CSS (PART-2)
+        Buttons • Signup • Forgot Password
+======================================================*/
+
+
+/*=========================
+        BUTTONS
+=========================*/
+
+.login-btn,
+.signup-btn,
+.auth-btn{
+
+    width:100%;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:14px;
+
+    font-size:16px;
+
     font-weight:600;
 
-}
+    transition:.35s;
 
-.auth-links a:hover{
+    color:#fff;
 
-    text-decoration:underline;
-
-}
-
-/* Animation */
-
-@keyframes fadeIn{
-
-from{
-
-opacity:0;
-transform:translateY(30px);
-
-}
-
-to{
-
-opacity:1;
-transform:translateY(0);
-
-}
-
-}
-
-/* ============================
-      SIGNUP PAGE
-============================ */
-
-body.signup-page{
-
-    margin:0;
-    padding:0;
-
-    min-height:100vh;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    background:
-        linear-gradient(
-            rgba(0,0,0,.55),
-            rgba(0,0,0,.55)
-        ),
-        url("../images/signup.png");
-
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-    background-attachment:fixed;
-}
-
-/* Full Page Background */
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
-
-    background: url("../images/image.png") no-repeat center center fixed;
-    background-size: cover;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    min-height: 100vh;
-}
-
-/* ==============================
-      3D LOGIN BACKGROUND
-================================ */
-
-
-.login-page,
-.signup-page{
-    background:
-    radial-gradient(
-        circle at top,
-        #0f3d56,
-        #020617
-    );
-    min-height:100vh;
-    overflow:hidden;
-}
-
-#bg-animation{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    z-index:-1;
-}
-
-/* Glass Login Card */
-.auth-card{
-    margin-top:0;
-    background:rgba(255,255,255,0.12);
-    backdrop-filter:blur(18px);
-    border-radius:20px;
-    border:1px solid rgba(255,255,255,0.25);
-    box-shadow:
-    0 0 40px rgba(0,255,255,0.35);
-    color:white;
-}
-
-.login-header{
-    background:
-    linear-gradient(
-    135deg,
-    #0066ff,
-    #00d4ff
-    );
-    border-radius:
-    20px 20px 0 0;
-}
-
-.form-label{
-    color:white;
-}
-
-.form-control{
-    background:
-    rgba(255,255,255,0.15);
-    border:none;
-    color:white;
-}
-
-.form-control::placeholder{
-    color:#ddd;
-}
-
-.form-control:focus{
-    background:
-    rgba(255,255,255,0.25);
-    color:white;
 }
 
 .login-btn{
-    background:
-    linear-gradient(
+
+    background:linear-gradient(
     135deg,
-    #00c6ff,
-    #0072ff
-    );
-    color:white;
-    border:none;
+    #0099ff,
+    #00d4ff);
+
+}
+
+.login-btn:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 30px rgba(0,212,255,.35);
+
 }
 
 .signup-btn{
-    background:
-    linear-gradient(
+
+    background:linear-gradient(
     135deg,
-    #00b09b,
-    #96c93d
-    );
-    color:white;
+    #00b894,
+    #00d084);
+
 }
 
-.forgot-link{
-    color:#00ffff;
-}
-/* Center Signup Card */
+.signup-btn:hover{
 
-.signup-container{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    transform:translateY(-3px);
+
+    box-shadow:0 10px 30px rgba(0,255,180,.30);
+
 }
 
-.signup-container .row{
-    width:100%;
+.btn-outline-light{
+
+    border-radius:14px;
+
+    height:50px;
+
+    font-weight:600;
+
 }
 
-.signup-container .col-md-5{
-    display:flex;
-    justify-content:center;
+.btn-outline-light:hover{
+
+    color:#000;
+
 }
 
-/* =========================
-   FORGOT PASSWORD 3D UI
-========================= */
 
+/*=========================
+        LINKS
+=========================*/
+
+a{
+
+    text-decoration:none;
+
+}
+
+a:hover{
+
+    text-decoration:none;
+
+}
+
+
+/*=========================
+      FORM SPACING
+=========================*/
+
+.mb-3{
+
+    margin-bottom:18px !important;
+
+}
+
+.mt-4{
+
+    margin-top:24px !important;
+
+}
+
+
+/* SIGNUP CARD */
+
+.signup-card{
+
+    width:520px;
+    max-width:100%;
+
+    padding:35px;
+
+    background:rgba(255,255,255,.12);
+
+    backdrop-filter:blur(20px);
+
+    border-radius:25px;
+
+    border:1px solid rgba(255,255,255,.18);
+
+    box-shadow:0 15px 45px rgba(0,0,0,.35);
+
+}
+
+/* Everything inside gets spacing */
+
+.signup-card>*{
+
+    margin-left:8px;
+    margin-right:8px;
+
+}
+
+/* Form */
+
+.signup-card form{
+
+    margin-top:20px;
+
+}
+
+/* Labels */
+
+.signup-card .form-label{
+
+    margin-bottom:8px;
+    font-weight:600;
+
+}
+
+/* Inputs */
+
+.signup-card .form-control{
+
+    height:54px;
+
+    padding:15px 18px;
+
+    border-radius:14px;
+
+    margin-bottom:18px;
+
+}
+
+/* Button */
+
+.signup-card .signup-btn{
+
+    height:55px;
+
+    margin-top:10px;
+
+}
+
+/* Bottom */
+
+.signup-card hr{
+
+    margin:30px 0 20px;
+
+}
+
+/*=========================
+      FORGOT PASSWORD
+=========================*/
 
 .forgot-password-page{
 
-    min-height:100vh;
-    overflow:hidden;
+    display:flex;
 
-    background:
-    radial-gradient(
-        circle at top,
-        #123456,
-        #020617
-    );
+    justify-content:center;
+
+    align-items:center;
+
+    padding:40px;
 
 }
 
-
-
-#forgot-bg{
-
-    position:fixed;
-
-    top:0;
-    left:0;
+.forgot-container{
 
     width:100%;
-    height:100%;
 
-    z-index:-1;
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
 
 }
-
-
 
 .forgot-container .auth-card{
 
-    width:420px;
+    max-width:450px;
 
 }
-/* Forgot Password Card Size */
-
-.forgot-container{
-    position: fixed;
-    inset: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-}
-
-.auth-card-wrapper{
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.forgot-container .auth-card{
-    width: 430px;
-    margin: 0;
-}
-
-/* Reduce card height */
 
 .forgot-container .card-body{
-    padding:30px;
+
+    padding:42px;
+
 }
 
-.forgot-container .form-control{
-    height:45px;
+.forgot-container h2{
+
+    text-align:center;
+
+    margin-bottom:12px;
+
 }
 
-/* Verify OTP Card */
+.forgot-container p{
 
-.forgot-container{
-    position: fixed;
-    inset: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
+    text-align:center;
+
+    margin-bottom:28px;
+
 }
+
+
+/*=========================
+       OTP PAGE
+=========================*/
 
 .otp-card{
-    width: 430px;
-    margin: 0;
-    border-radius: 20px;
+
+    max-width:440px;
+
 }
 
 .otp-card .card-body{
-    padding: 30px;
+
+    padding:42px;
+
 }
 
-/* ===============================
-        AUTH HEADER ICON
-================================ */
+
+/*=========================
+    RESET PASSWORD
+=========================*/
+
+.reset-card{
+
+    max-width:450px;
+
+}
+
+.reset-card .card-body{
+
+    padding:42px;
+
+}
+
+
+/*=========================
+      HEADER ICON
+=========================*/
 
 .auth-title{
+
     display:flex;
-    align-items:center;
+
     justify-content:center;
+
+    align-items:center;
+
     gap:12px;
-    font-weight:600;
-    margin:0;
+
+    margin-bottom:10px;
+
 }
 
 .auth-title i{
-    font-size:30px;
-    color:#fff;
-    animation:iconFloat 2s ease-in-out infinite;
+
+    font-size:34px;
+
+    color:#00d4ff;
+
 }
 
-@keyframes iconFloat{
+
+/*=========================
+      DIVIDER
+=========================*/
+
+hr{
+
+    border-color:rgba(255,255,255,.15);
+
+    margin:28px 0;
+
+}
+
+
+/*=========================
+      SMALL TEXT
+=========================*/
+
+.small-text{
+
+    font-size:14px;
+
+    color:#bcd4f7;
+
+}
+
+
+/*=========================
+      CARD FOOTER
+=========================*/
+
+.bottom-links{
+
+    margin-top:22px;
+
+    text-align:center;
+
+}
+
+.bottom-links p{
+
+    margin-bottom:15px;
+
+}
+
+/*=====================================================
+        AUTH.CSS (PART-3)
+      Responsive + Animations + Final Polish
+======================================================*/
+
+
+/*==============================
+        SMOOTH ANIMATIONS
+==============================*/
+
+*{
+    transition:
+    background .35s ease,
+    color .35s ease,
+    border-color .35s ease,
+    transform .35s ease,
+    box-shadow .35s ease;
+}
+
+
+/*==============================
+      FLOATING LOGIN ICON
+==============================*/
+
+@keyframes floatIcon{
 
     0%{
         transform:translateY(0px);
     }
+
     50%{
-        transform:translateY(-4px);
+        transform:translateY(-12px);
     }
+
     100%{
         transform:translateY(0px);
     }
+
 }
+
+
+/*==============================
+      LEFT CONTENT
+==============================*/
+
+@keyframes slideLeft{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateX(-80px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateX(0);
+
+    }
+
+}
+
+
+/*==============================
+      RIGHT CARD
+==============================*/
+
+@keyframes slideRight{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateX(80px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateX(0);
+
+    }
+
+}
+
+
+/*==============================
+       CARD FADE
+==============================*/
+
+@keyframes fadeCard{
+
+    from{
+
+        opacity:0;
+
+        transform:
+        translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+        translateY(0);
+
+    }
+
+}
+
+.auth-card{
+
+    animation:
+    fadeCard .8s ease;
+
+}
+
+
+/*==============================
+        CARD HOVER
+==============================*/
+
+.auth-card:hover{
+
+    transform:
+    translateY(-6px);
+
+    box-shadow:
+
+    0 30px 70px rgba(0,0,0,.45),
+
+    0 0 35px rgba(0,212,255,.22);
+
+}
+
+
+/*==============================
+        INPUT HOVER
+==============================*/
+
+.form-control:hover{
+
+    border-color:
+
+    rgba(0,212,255,.45);
+
+}
+
+
+/*==============================
+      FEATURE ANIMATION
+==============================*/
+
+.feature-list div{
+
+    transition:.35s;
+
+}
+
+.feature-list div:hover{
+
+    transform:
+
+    translateX(10px);
+
+    color:white;
+
+}
+
+.feature-list div:hover i{
+
+    color:#00ffff;
+
+}
+
+
+/*==============================
+       BUTTON HOVER
+==============================*/
+
+.login-btn:hover,
+.signup-btn:hover{
+
+    transform:
+
+    translateY(-4px);
+
+}
+
+
+/*==============================
+        SCROLLBAR
+==============================*/
+
+::-webkit-scrollbar{
+
+    width:8px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#06111d;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#00bfff;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#00ffff;
+
+}
+
+
+/*==============================
+      MOBILE 1200px
+==============================*/
+
+@media(max-width:1200px){
+
+.login-left h1{
+
+    font-size:48px;
+
+}
+
+.login-left p{
+
+    font-size:18px;
+
+}
+
+}
+
+
+/*==============================
+      TABLET
+==============================*/
+
+@media(max-width:992px){
+
+.login-wrapper{
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    text-align:center;
+
+    padding:40px 25px;
+
+    gap:40px;
+
+}
+
+.login-left{
+
+    max-width:100%;
+
+}
+
+.login-left h1{
+
+    font-size:42px;
+
+}
+
+.login-left p{
+
+    max-width:100%;
+
+}
+
+.feature-list{
+
+    align-items:center;
+
+}
+
+.login-right{
+
+    width:100%;
+
+}
+
+.auth-card{
+
+    max-width:480px;
+
+}
+
+}
+
+
+/*==============================
+        MOBILE
+==============================*/
+
+@media(max-width:768px){
+
+.login-wrapper{
+
+    padding:20px;
+
+}
+
+.login-left h1{
+
+    font-size:34px;
+
+}
+
+.login-left p{
+
+    font-size:16px;
+
+    line-height:28px;
+
+}
+
+.feature-list div{
+
+    font-size:16px;
+
+}
+
+.auth-card{
+
+    max-width:100%;
+
+}
+
+.auth-card .card-body{
+
+    padding:28px;
+
+}
+
+.login-icon{
+
+    font-size:56px;
+
+}
+
+}
+
+
+/*==============================
+      EXTRA SMALL
+==============================*/
+
+@media(max-width:480px){
+
+.login-left h1{
+
+    font-size:30px;
+
+}
+
+.auth-card{
+
+    border-radius:18px;
+
+}
+
+.auth-card .card-body{
+
+    padding:22px;
+
+}
+
+.form-control{
+
+    height:46px;
+
+}
+
+.login-btn,
+.signup-btn{
+
+    height:48px;
+
+}
+
+}
+
+
+/*==============================
+      UTILITIES
+==============================*/
+
+.text-white{
+
+    color:#fff !important;
+
+}
+
+.text-light-blue{
+
+    color:#b9dbff;
+
+}
+
+.rounded-20{
+
+    border-radius:20px;
+
+}
+
+.shadow-glow{
+
+    box-shadow:
+
+    0 0 25px rgba(0,212,255,.20);
+
+}
+
+.mt-30{
+
+    margin-top:30px;
+
+}
+
+.mb-30{
+
+    margin-bottom:30px;
+
+}
+
+.py-20{
+
+    padding-top:20px;
+
+    padding-bottom:20px;
+
+}
+
+.px-30{
+
+    padding-left:30px;
+
+    padding-right:30px;
+
+}
+
+
+/*==============================
+       REMOVE OUTLINES
+==============================*/
+
+button:focus,
+input:focus,
+textarea:focus,
+select:focus{
+
+    outline:none;
+
+}
+
+
+/*==============================
+          END
+==============================*/
+
