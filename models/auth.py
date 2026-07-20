@@ -23,6 +23,25 @@ def check_login(username, password):
             password.encode("utf-8"),
             stored_password.encode("utf-8")
         ):
+            # approval_status is the new column
+            # We fetch it by name to avoid index issues
+            conn = get_connection()
+            cur = conn.cursor()
+
+            cur.execute("""
+                SELECT approval_status
+                FROM users
+                WHERE username=%s
+            """, (username,))
+
+            status = cur.fetchone()[0]
+
+            cur.close()
+            conn.close()
+
+            if status != "Approved":
+                return "PENDING"
+
             return user
 
     return None
@@ -44,13 +63,14 @@ def register_user(full_name, username, email, password):
 
     cur.execute("""
         INSERT INTO users
-        (username, password, full_name, email)
-        VALUES (%s, %s, %s, %s)
+        (username, password, full_name, email, approval_status)
+        VALUES (%s, %s, %s, %s, %s)
     """, (
         username,
         hashed_password,
         full_name,
-        email
+        email,
+        "pending"
     ))
 
     conn.commit()

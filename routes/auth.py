@@ -17,7 +17,11 @@ def login():
         password = request.form["password"]
 
         user = check_login(username, password)
-
+        if user == "PENDING":
+            return render_template(
+                "login.html",
+                error="Your account is waiting for Admin approval."
+    )
         if user:
 
             session["user"] = user[1]          # username

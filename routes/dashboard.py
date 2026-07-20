@@ -5,7 +5,8 @@ from models.dashboard import (
     dashboard_count,
     asset_category_chart,
     complaint_status_chart,
-    maintenance_month_chart
+    maintenance_month_chart,
+    get_pending_user_count
 )
 
 dashboard_bp = Blueprint("dashboard", __name__)
@@ -30,6 +31,7 @@ def dashboard():
         total_asset=data["total_asset"],
         total_complaint=data["total_complaint"],
         total_maintenance=data["total_maintenance"],
+        pending_users=get_pending_user_count(), 
         asset_chart=asset_chart,
         complaint_chart=complaint_chart,
         maintenance_chart=maintenance_chart

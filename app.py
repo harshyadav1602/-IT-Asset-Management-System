@@ -8,12 +8,24 @@ from routes.maintenance import maintenance_bp
 from routes.auth import auth_bp
 from routes.reports import reports_bp
 from routes.employee_portal import employee_portal_bp
+from routes.approval import approval_bp
+from models.approval import get_pending_count
 import os
 
 UPLOAD_FOLDER = "static/uploads/profile"
 app = Flask(__name__)
 app.secret_key = "harsh_project_secret_key"
 app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+@app.context_processor
+def inject_pending_count():
+    try:
+        return {
+            "pending_count": get_pending_count()
+        }
+    except Exception:
+        return {
+            "pending_count": 0
+        }
 app.register_blueprint(dashboard_bp)
 app.register_blueprint(employee_bp)
 app.register_blueprint(asset_bp)
@@ -22,6 +34,7 @@ app.register_blueprint(maintenance_bp)
 app.register_blueprint(auth_bp)
 app.register_blueprint(reports_bp)
 app.register_blueprint(employee_portal_bp)
+app.register_blueprint(approval_bp)
 
 @app.route("/")
 def home():

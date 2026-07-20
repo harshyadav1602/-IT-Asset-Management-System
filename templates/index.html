@@ -99,6 +99,25 @@
             </a>
         </li>
         {% endif %}
+
+        {% if session.get("role") == "Admin" %}
+        <li>
+            <a href="{{ url_for('approval.user_approval') }}" class="d-flex align-items-center">
+
+            <i class="bi bi-person-check-fill"></i>
+
+            <span class="ms-2">User Approval</span>
+
+            {% if pending_count > 0 %}
+            <span class="badge bg-danger rounded-pill ms-auto">
+                {{ pending_count }}
+            </span>
+            {% endif %}
+
+        </a>
+        </li>
+        {% endif %}
+
         {% if session.get("role") == "Admin" %}
         <li>
             <a href="/assets">

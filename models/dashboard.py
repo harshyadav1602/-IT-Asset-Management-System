@@ -114,3 +114,25 @@ def maintenance_month_chart():
     conn.close()
 
     return data
+
+# ==========================================
+# Pending User Approval Count
+# ==========================================
+
+def get_pending_user_count():
+
+    conn = get_connection()
+    cur = conn.cursor()
+
+    cur.execute("""
+        SELECT COUNT(*)
+        FROM users
+        WHERE LOWER(approval_status)='pending'
+    """)
+
+    count = cur.fetchone()[0]
+
+    cur.close()
+    conn.close()
+
+    return count
